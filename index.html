@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1">
-  <link rel="shortcut icon" href="../staticweb_tomy/img/icon.jpg">
-  <link rel="stylesheet" type="text/css" href="../staticweb_tomy/css/index.css">
+  <link rel="shortcut icon" href="img/icon.jpg">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
   <title>远方的信</title>
 
 </head>
 
 <body>
-  <audio id="bgmusic" loop type="audio/mpeg" src="../staticweb_tomy/media/bgmusic.mp3"></audio>
-  <audio id="hbmusic" loop type="audio/mpeg" src="../staticweb_tomy/media/hbmusic.mp3"></audio>
-  <img id="img_bg" src="../staticweb_tomy/img/background.jpg">
+  <audio id="bgmusic" loop type="audio/mpeg" src="media/bgmusic.mp3"></audio>
+  <audio id="hbmusic" loop type="audio/mpeg" src="media/hbmusic.mp3"></audio>
+  <img id="img_bg" src="img/background.jpg">
   <div id = "text_title">“也许世界上有五千朵和你一样的花，但你是我独一无二的玫瑰”</div>
   <div id = "text_note">To 小美</div>
   <div id = "time_love">
@@ -124,7 +124,7 @@
     let heartNum = Math.floor(Math.random() * (imgnum - 0.001));
     let div = document.createElement("img");
     div.setAttribute("class", "img_heart")
-    div.src = "../staticweb_tomy/img/heart" + heartNum.toString() + ".png";
+    div.src = "img/heart" + heartNum.toString() + ".png";
     document.body.appendChild(div);
     //获得鼠标的x,y轴的位置，并减去自身宽高的一半，使其能够在爱心的正中心
     let x = eX - div.offsetWidth / 2
@@ -175,7 +175,7 @@
       let eY = Math.floor(Math.random() * document.body.clientHeight)
       let div = document.createElement("img");
       div.setAttribute("class", "img_heart_blur")
-      div.src = "../staticweb_tomy/img/heart" + i.toString() + ".png";
+      div.src = "img/heart" + i.toString() + ".png";
       document.body.appendChild(div);
       //获得鼠标的x,y轴的位置，并减去自身宽高的一半，使其能够在爱心的正中心
       let x = eX - div.offsetWidth / 2
