@@ -39,6 +39,14 @@
   <input id="password" type="text" name="" oninput="displayHappyTime()">
 <script>
   var DateTogether = new Date(2024, 0, 29, 21, 50, 0)
+  var DateFirstMeet = new Date(2023, 10, 19, 10, 0, 0)
+  var DateMarryInLaw = new Date(2025, 9, 16, 15, 0, 0)
+  var DateMarry = new Date(2025, 10, 18, 12, 0, 0)
+  var DateList = [DateTogether, DateFirstMeet, DateMarryInLaw, DateMarry]
+  var PassWordList = ["在一起", "认识你", "领证", "结婚"]
+  var DateDisplay = DateTogether
+
+
   var BGM = document.getElementById("bgmusic")
   var HBM = document.getElementById("hbmusic")
   var bgmstart = false
@@ -84,7 +92,7 @@
   function updateHappyTime() {
     
     let dateNow = new Date();
-    let happyTime = dateNow.getTime() - DateTogether.getTime();
+    let happyTime = dateNow.getTime() - DateDisplay.getTime();
     let days = Math.floor(happyTime / (1000 * 60 * 60 * 24));
     let hours = Math.floor((happyTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let minutes = Math.floor((happyTime % (1000 * 60 * 60)) / (1000 * 60));
@@ -101,8 +109,14 @@
   }
 
   function displayHappyTime() {
-    var password = document.getElementById('password').value;
-    if (password == "在一起") {
+    var password = document.getElementById('password').value
+    var pindex = PassWordList.indexOf(password)
+    if (pindex >= 0) {
+      let element = document.getElementById("text_together")
+	  element.innerHTML = PassWordList[pindex]
+
+	  DateDisplay = DateList[pindex]
+
       timedisplay = true
       let timeOpacity = 0
       let element_time = document.getElementById("time_love")
