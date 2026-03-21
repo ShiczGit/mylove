@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1">
+  <link rel="shortcut icon" href="../staticweb_tomy/img/icon.jpg">
+  <link rel="stylesheet" type="text/css" href="../staticweb_tomy/css/index.css">
+  <title>远方的信</title>
+
+</head>
+
+<body>
+  <audio id="bgmusic" loop type="audio/mpeg" src="../staticweb_tomy/media/bgmusic.mp3"></audio>
+  <audio id="hbmusic" loop type="audio/mpeg" src="../staticweb_tomy/media/hbmusic.mp3"></audio>
+  <img id="img_bg" src="../staticweb_tomy/img/background.jpg">
+  <div id = "text_title">“也许世界上有五千朵和你一样的花，但你是我独一无二的玫瑰”</div>
+  <div id = "text_note">To 小美</div>
+  <div id = "time_love">
+    <div id="text_together">在一起</div>
+    <table id="table_time" border="0">
+      <thead>
+        <tr>
+          <th class="text_value" id="text_day">00000</th>
+          <th class="text_value" id="text_hour">00</th>
+          <th class="text_value" id="text_minute">00</th>
+          <th class="text_value" id="text_second">00</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text_unit">天</td>
+          <td class="text_unit">小时</td>
+          <td class="text_unit">分钟</td>
+          <td class="text_unit">秒</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <input id="password" type="text" name="" oninput="displayHappyTime()">
+<script>
+  var DateTogether = new Date(2024, 0, 29, 21, 50, 0)
+  var BGM = document.getElementById("bgmusic")
+  var HBM = document.getElementById("hbmusic")
+  var bgmstart = false
+  var timedisplay = false
+  var imgnum = 10
+  var BirthDay = [
+    [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033],
+    [11,12,12,11,12,11,11,12,11,11],
+    [24,13,2,21,9,29,19,8,26,5]
+  ]
+  var todayIsBirthDay = false
+
+
+  window.onload = function(e) {
+    let timer = setInterval(() => {
+      updateHappyTime();
+    }, 100)
+    setHeartBeat()
+
+    let dateNow = new Date()
+    let year = dateNow.getFullYear()
+    let month = dateNow.getMonth() + 1
+    let day = dateNow.getDate()
+    let iyear = BirthDay[0].indexOf(year)
+    if (iyear >= 0) {
+      if (BirthDay[1][iyear] == month && BirthDay[2][iyear] == day) {
+        todayIsBirthDay = true;
+      }
+    }
+  }
+  
+  window.onclick = function(e) {
+    if (timedisplay == true) {
+      displayHeart(e.pageX, e.pageY)
+    }
+    else {
+      if (e.pageY > (0.1 * window.innerHeight + 0.25 * window.innerWidth)) {
+        displayHeart(e.pageX, e.pageY)
+      }
+    }
+  }
+
+  function updateHappyTime() {
+    
+    let dateNow = new Date();
+    let happyTime = dateNow.getTime() - DateTogether.getTime();
+    let days = Math.floor(happyTime / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((happyTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((happyTime % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((happyTime % (1000 * 60)) / (1000));
+
+    let element = document.getElementById("text_day");
+    element.innerHTML = days.toString();
+    element = document.getElementById("text_hour");
+    element.innerHTML = hours.toString();
+    element = document.getElementById("text_minute");
+    element.innerHTML = minutes.toString();
+    element = document.getElementById("text_second");
+    element.innerHTML = seconds.toString();
+  }
+
+  function displayHappyTime() {
+    var password = document.getElementById('password').value;
+    if (password == "在一起") {
+      timedisplay = true
+      let timeOpacity = 0
+      let element_time = document.getElementById("time_love")
+      let element_pword = document.getElementById("password")
+      element_pword.remove()
+
+      let timer = setInterval(() => {
+        timeOpacity = timeOpacity = timeOpacity + 0.01
+        element_time.style.opacity = timeOpacity
+        if (timeOpacity >= 1) {
+          clearInterval(timer)
+        }
+      }, 20)
+    }
+  }
+
+  function displayHeart(eX, eY) {
+    //存储需要的颜色
+    let heartNum = Math.floor(Math.random() * (imgnum - 0.001));
+    let div = document.createElement("img");
+    div.setAttribute("class", "img_heart")
+    div.src = "../staticweb_tomy/img/heart" + heartNum.toString() + ".png";
+    document.body.appendChild(div);
+    //获得鼠标的x,y轴的位置，并减去自身宽高的一半，使其能够在爱心的正中心
+    let x = eX - div.offsetWidth / 2
+    let y = eY - div.offsetHeight / 2
+    let w = 10
+    let h = 10
+    let o = 1
+    div.style.left = x + "px"
+    div.style.top = y + "px"
+    div.style.width = w + "px"
+    div.style.height = h + "px"
+    div.style.opacity = o
+    //获得0-1的整数
+    let timer = setInterval(() => {
+      x = x - 2
+      y = y - 2
+      w = w + 4
+      h = h + 4
+      o = o - 0.02
+      div.style.left = x + "px"
+      div.style.top = y + "px"
+      div.style.width = w + "px"
+      div.style.height = h + "px"
+      div.style.opacity = o
+      //如果超出屏幕范围，则删除此节点
+      if (o < 0.02) {
+        clearInterval(timer)
+        div.remove();
+      }
+    }, 20);
+
+    if (bgmstart == false && heartNum == (imgnum - 1)) {
+      if (todayIsBirthDay == true) {
+        HBM.play()
+      }
+      else {
+        BGM.play()
+      }
+      bgmstart = true
+      imgnum -= 1
+    }
+  }
+
+  function setHeartBeat() {
+    let heart_timer = setInterval(() => {
+      let i = Math.floor(Math.random() * (imgnum - 0.001))
+      let eX = Math.floor(Math.random() * document.body.clientWidth)
+      let eY = Math.floor(Math.random() * document.body.clientHeight)
+      let div = document.createElement("img");
+      div.setAttribute("class", "img_heart_blur")
+      div.src = "../staticweb_tomy/img/heart" + i.toString() + ".png";
+      document.body.appendChild(div);
+      //获得鼠标的x,y轴的位置，并减去自身宽高的一半，使其能够在爱心的正中心
+      let x = eX - div.offsetWidth / 2
+      let y = eY - div.offsetHeight / 2
+      let w = 5
+      let h = 5
+      let o = 1
+      div.style.left = x + "px"
+      div.style.top = y + "px"
+      div.style.width = w + "px"
+      div.style.height = h + "px"
+      div.style.opacity = o
+      //获得0-1的整数
+      let timer = setInterval(() => {
+        x = x - 1
+        y = y - 1
+        w = w + 2
+        h = h + 2
+        o = o - 0.02
+        div.style.left = x + "px"
+        div.style.top = y + "px"
+        div.style.width = w + "px"
+        div.style.height = h + "px"
+        div.style.opacity = o
+        if (o < 0.02) {
+          clearInterval(timer)
+          div.remove();
+        }
+      }, 20);
+    }, 500)
+  }
+
+</script>
+
+</body>
+
+</html>
